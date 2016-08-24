@@ -1,0 +1,30 @@
+{
+  "name": "phpbible",
+  "version": "1.0.0",
+  "description": "Using combib with PHP.",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.14.0",
+    "connect-livereload": "^0.5.4",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-connect-php": "0.0.8",
+    "gulp-livereload": "^3.8.1",
+    "gulp-open": "^2.0.0",
+    "http-proxy": "^1.14.0",
+    "node-php-server": "^0.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "PHP",
+    "bible",
+    "combib"
+  ],
+  "author": "Tobias Philipp",
+  "license": "ISC"
+}
