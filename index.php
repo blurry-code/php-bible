@@ -209,31 +209,33 @@
                     <legend>Result</legend>
                     <div class="result"></div>
                     <br />
-                    <div id="demo5" class="row">
-                        <script>
-                            chooseDemo(5);
-                        </script>
-                        <div class="col-xs-3">
-                            <legend>Reference</legend>
-                            1 John 1:1-4
-                        </div>
-                        <div class="col-xs-3">
-                            <legend>PHP parameters</legend>
-                            <div class="col-xs-6">
-                                <strong>book</strong><br />
-                                <strong>chapter</strong><br />
-                                <strong>verses</strong>
+                    <div id="demo5">
+                        <div class="row">
+                            <script>
+                                chooseDemo(5);
+                            </script>
+                            <div class="col-xs-3">
+                                <legend>Reference</legend>
+                                1 John 1:1-4
                             </div>
-                            <div class="col-xs-6">
-                                62<br />
-                                1<br />
-                                1-4
+                            <div class="col-xs-3">
+                                <legend>PHP parameters</legend>
+                                <div class="col-xs-6">
+                                    <strong>book</strong><br />
+                                    <strong>chapter</strong><br />
+                                    <strong>verses</strong>
+                                </div>
+                                <div class="col-xs-6">
+                                    62<br />
+                                    1<br />
+                                    1-4
+                                </div>
                             </div>
                         </div>
+                        <br />
+                        <legend>Result</legend>
+                        <div class="result"></div>
                     </div>
-                    <br />
-                    <legend>Result</legend>
-                    <div class="result"></div>
                   </div>
                
                 

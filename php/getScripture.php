@@ -188,9 +188,7 @@ if (!empty($reference)) {
             $arrVRange = array();
             $tmpVerses = $_GET["verses"];
             if(!empty($tmpVerses)) {
-                if (strpos($tmpVerses,',') === false && strpos($arrVEl,'-') === false) {
-                    var_dump($tmpVerses);
-                    echo "HERE: ".strpos($arrVEl,'-');
+                if (strpos($tmpVerses,',') === false && strpos($tmpVerses,'-') === false) {
                     // single verse
                     array_push($versesNr, intval($tmpVerses));
                 } else if (strpos($tmpVerses,',')) {
@@ -199,7 +197,6 @@ if (!empty($reference)) {
                 } else {
                     // single range of verses
                     array_push($arrVers, $tmpVerses);
-                    var_dump ($arrVers);
                 }
                 foreach ($arrVers as $arrVEl) {
                     if (strpos($arrVEl,'-')) {
@@ -209,8 +206,6 @@ if (!empty($reference)) {
                     if (count($arrVRange) != 2) echo("<script>console.log('PHP: Ranges must have format <value>-<value>!');</script>");
                     $vFrom = intval ($arrVRange[0]);
                     $vTo = intval ($arrVRange[1]) + 1;
-                    var_dump($vFrom);
-                    var_dump($vTo);
                     for ($v = $vFrom; $v < $vTo; $v++) { 
                         array_push($versesNr, $v);
                     }	
