@@ -38,7 +38,7 @@
                     <li role="presentation"><a href="#demo1" aria-controls="demo1" role="tab" data-toggle="tab">demo 1</a></li> 
                     <li role="presentation"><a href="#demo2" aria-controls="demo2" role="tab" data-toggle="tab">demo 2</a></li>
                     <li role="presentation"><a href="#demo3" aria-controls="demo3" role="tab" data-toggle="tab">demo 3</a></li>
-                   <!-- <li role="presentation"><a href="#demo4" aria-controls="demo4" role="tab" data-toggle="tab">demo 4</a></li> -->
+                    <li role="presentation"><a href="#demo4" aria-controls="demo4" role="tab" data-toggle="tab">demo 4</a></li> 
                 </ul>
 
                 <!-- Tab panes -->
@@ -46,7 +46,7 @@
                 <br />
                 <div role="tabpanel" class="tab-pane active" id="intro"> 
                     <script>
-                        // chooseDemo(0);
+                         chooseDemo(0);
                     </script>
                     <br />
                     <legend>Intro</legend>
@@ -70,12 +70,16 @@
                         <li>The script searches through an entire xml bible to find the right scripture, then formats it, mainly removing some of the xml tags that caused problems and send it back as a string.</li>
                         <li>In the final result there are classes set for chapter title, chapter text, vers numbers and the verses.</li>
                     </ul>
-<!--  
+  
                     <br />
                     <legend>Develop</legend>
                     <div class="result"></div>
--->
+
                 </div>
+                    
+                    
+                <!-- TABS -->
+                    
                 <div role="tabpanel" class="tab-pane" id="demo1">
                     <script>
                         chooseDemo(1);
@@ -83,7 +87,7 @@
                     <br />
                     <legend>by reference</legend>
                     <br />
-                    <p>Fetching scripture by reference is more limited than using the other parameters directly:</p>
+                    <p>Fetching scripture by <i>reference</i> is more limited than using the other parameters directly:</p>
                     <ul>
                         <li>all other parameters are ignored if <i>reference</i> is set</li>
                         <li>the reference has to be in one of following formats 
@@ -114,17 +118,14 @@
                     <legend>Result</legend>
                     <div class="result"></div>
                 </div>
-                <!--
-                <div role="tabpanel" class="tab-pane" id="demo1">
+                <div role="tabpanel" class="tab-pane" id="demo2">
                     <script>
                         chooseDemo(1);
                     </script>
                     <br />
-                    <legend>TODO</legend>
-                    <strong>No chapter should default to entire book.</strong><br />
-                    <br />
                     <legend>whole book</legend>
                     <br />
+                    <p>If there is no <i>chapter</i> value set, any value for <i>verses</i> will be ignored.</p>
                     <div class="row">
                         <div class="col-xs-3">
                             <legend>Reference</legend>
@@ -143,9 +144,8 @@
                     <br />
                     <legend>Result</legend>
                     <div class="result"></div>
-                </div>
--->
-                <div role="tabpanel" class="tab-pane" id="demo2">
+                </div>    
+                <div role="tabpanel" class="tab-pane" id="demo3">
                     <script>
                         chooseDemo(2);
                     </script>
@@ -176,7 +176,7 @@
                     <legend>Result</legend>
                     <div class="result"></div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="demo3">
+                <div role="tabpanel" class="tab-pane" id="demo4">
                         <script>
                         chooseDemo(3);
                     </script>
@@ -209,11 +209,7 @@
                     <legend>Result</legend>
                     <div class="result"></div>
                   </div>
-                <div role="tabpanel" class="tab-pane" id="demo4">
-                    <br />
-                      <legend>demo 3</legend>
-                  </div>
-                </div>
+               
                 
             </div> <!-- .main end -->
         </div> <!-- .container end -->

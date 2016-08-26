@@ -2,22 +2,18 @@
 
 include 'scripture.php';
 
-
+// load the verses
+$filename = "../bibles/bible_de.json";
+$handle = fopen($filename, "r") or die ("Unable to open file!");
+$contents = fread($handle, filesize($filename));
+$bible_info = json_decode($contents, true);
+fclose($handle); 
+    
 /*
  *  DEV
  */
 
-function parseReference_book (&$reference) {
-    
-    // load the verses
-    $filename = "../bibles/bible_de.json";
-    $handle = fopen($filename, "r") or die ("Unable to open file!");
-    $contents = fread($handle, filesize($filename));
-    $bible_info = json_decode($contents, true);
-    fclose($handle); 
-    
-    
-    echo("<script>console.log('".$bible_info."');</script>");
+function parseReference_book (&$reference, $bible_info) {
     $foundItem;
     foreach($bible_info as $item) {
         if ($foundItem) break;
@@ -72,14 +68,11 @@ function parseReference_verse (&$reference) {
 }
 
 $reference = $_GET["reference"];
-
-
-
 $bibleBook;
 $bibleChapter;
 $bibleVerse;
 if (!empty($reference)) {
-    $bibleBook = parseReference_book ($reference);
+    $bibleBook = parseReference_book ($reference, $bible_info);
     $bibleChapter = parseReference_chapter ($reference);
     $bibleVerse = parseReference_verse ($reference);
     
@@ -132,6 +125,7 @@ if (!empty($reference)) {
         // chapter
         $chapterNr = array();
         if(!empty($_GET["chapter"]))  {
+            // get selected chapters
             $tmpChapters = $_GET["chapter"];
             if (strpos($tmpChapters,'-')) {
                 $ch = explode('-',$tmpChapters);
@@ -147,7 +141,19 @@ if (!empty($reference)) {
                 array_push($chapterNr, $tmpChapters);
             }
         } else {
-            array_push($chapterNr,"1");
+            // get entire book
+            $foundItem = null;
+            foreach($bible_info as $item) {
+                if (!empty($foundItem)) break;
+                if (strcmp($bookNr, $item['nummer']) === 0) {
+                    $foundItem = $item;
+                    break;
+                }
+            }
+            echo count($foundItem['struktur']);
+            for ($c = 0; $c < count($foundItem['struktur']); $c++) { 
+                array_push($chapterNr, $c + 1);
+            }	
             echo("<script>console.log('PHP: The chapter number was not specified!');</script>");
         }
         $chCount = count($chapterNr);
@@ -190,16 +196,6 @@ if (!empty($reference)) {
             echo("<script>console.log('PHP: Multiple chapters AND multiple verses are not supported!');</script>");
             $wholeChapter = true;
         }
-
-
-    /*
-       echo $bible."<br />";
-        echo "book ".$bookNr."<br />";
-        var_dump($chapterNr);
-        echo "<br />chapters amount: ".$chCount."<br />";
-    echo "whole chapters: ".$wholeChapter."<br />";
-    var_dump($versesNr);
-    */
 
      getScripture($bible, $bookNr, $chapterNr, $chCount, $wholeChapter, $versesNr);
 
