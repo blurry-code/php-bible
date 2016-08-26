@@ -15,6 +15,7 @@ function getScripture($bible, $bookNr, $chapterNr, $chCount, $wholeChapter, $ver
 	}
     
 	$cData = array();
+    if(empty($chCount)) $chCount = count($chapterNr);
 	for ($c = 0; $c < $chCount; $c++) {
 		// The book was fetched. Chose now the right chapter.
 		if (!$data || $data == null) {

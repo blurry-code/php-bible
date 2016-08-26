@@ -46,7 +46,7 @@
                 <br />
                 <div role="tabpanel" class="tab-pane active" id="intro"> 
                     <script>
-                         chooseDemo(0);
+                        // chooseDemo(0);
                     </script>
                     <br />
                     <legend>Intro</legend>
@@ -72,9 +72,9 @@
                     </ul>
   
                     <br />
-                    <legend>Develop</legend>
+                  <!--  <legend>Develop</legend>
                     <div class="result"></div>
-
+-->
                 </div>
                     
                     
@@ -92,9 +92,11 @@
                         <li>all other parameters are ignored if <i>reference</i> is set</li>
                         <li>the reference has to be in one of following formats 
                             <ul>
+                                <li>book</li>
                                 <li>book chapter</li>
-                                <li>book chapter:verse</li>
-                                <li>book chapter:verse1-verse2 (verse1 <= verse2)</li>
+                                <li>book chapter1<strong>-</strong>chapter2 (chapter1 <= chapter2)</li>
+                                <li>book chapter<strong>:</strong>verse</li>
+                                <li>book chapter<strong>:</strong>verse1<strong>-</strong>verse2 (verse1 <= verse2)</li>
                             </ul>
                         </li>
                     </ul>
@@ -120,12 +122,12 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="demo2">
                     <script>
-                        chooseDemo(1);
+                        chooseDemo(2);
                     </script>
                     <br />
                     <legend>whole book</legend>
                     <br />
-                    <p>If there is no <i>chapter</i> value set, any value for <i>verses</i> will be ignored.</p>
+                    <p>When there is no <i>chapter</i> value set, any value for <i>verses</i> will be ignored. The entire <i>book</i> will be chosen.</p>
                     <div class="row">
                         <div class="col-xs-3">
                             <legend>Reference</legend>
@@ -147,7 +149,7 @@
                 </div>    
                 <div role="tabpanel" class="tab-pane" id="demo3">
                     <script>
-                        chooseDemo(2);
+                        chooseDemo(3);
                     </script>
                     <br />
                    <!-- <legend>TODO</legend>
@@ -155,6 +157,7 @@
                     <br />-->
                     <legend>whole chapter</legend>
                     <br />
+                    <p>When there is no <i>verses</i> value set, the entire <i>chapter</i> will be chosen.</p>
                     <div class="row">
                         <div class="col-xs-3">
                             <legend>Reference</legend>
@@ -177,13 +180,10 @@
                     <div class="result"></div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="demo4">
-                        <script>
-                        chooseDemo(3);
+                    <script>
+                        chooseDemo(4);
                     </script>
                     <br />
-                   <!-- <legend>TODO</legend>
-                    <strong></strong><br />
-                    <br />-->
                     <legend>one verse</legend>
                     <br />
                     <div class="row">
@@ -202,6 +202,32 @@
                                 62<br />
                                 1<br />
                                 1
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <legend>Result</legend>
+                    <div class="result"></div>
+                    <br />
+                    <div id="demo5" class="row">
+                        <script>
+                            chooseDemo(5);
+                        </script>
+                        <div class="col-xs-3">
+                            <legend>Reference</legend>
+                            1 John 1:1-4
+                        </div>
+                        <div class="col-xs-3">
+                            <legend>PHP parameters</legend>
+                            <div class="col-xs-6">
+                                <strong>book</strong><br />
+                                <strong>chapter</strong><br />
+                                <strong>verses</strong>
+                            </div>
+                            <div class="col-xs-6">
+                                62<br />
+                                1<br />
+                                1-4
                             </div>
                         </div>
                     </div>

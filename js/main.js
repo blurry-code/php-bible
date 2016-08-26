@@ -24,6 +24,14 @@ var chooseDemo = function(idx) {
                 verses:1
             };
             break;
+        case 5:
+            params = {
+                log:true,
+                book:1,
+                chapter:1,
+                verses:"1-4"
+            };
+            break;
     } 
     
     // async call for scripture

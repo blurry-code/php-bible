@@ -16,13 +16,14 @@ fclose($handle);
 function parseReference_book (&$reference, $bible_info) {
     $foundItem;
     foreach($bible_info as $item) {
-        if ($foundItem) break;
+        if (!empty($foundItem)) break;
         if (strpos($reference, $item['name']) !== false) {
             $reference = str_replace($item['name'], "", $reference);
             $foundItem = $item;
             break;
         }
         foreach ($item['alternatives'] as $alt) {
+            
             if (strpos($reference, $alt) !== false) {
                 $reference = str_replace($alt, "", $reference);
                 $foundItem = $item;
@@ -34,17 +35,42 @@ function parseReference_book (&$reference, $bible_info) {
     return $foundItem;
 }
 
-function parseReference_chapter (&$reference) {
-    if (!$reference || $reference == "") return;
+function parseReference_chapter (&$reference, $bookNr, &$wholeChapter, $bible_info) {
+    $chapter = array();
     
-    $chapter;
-    if (strpos($reference,":")) {
-        $chapter = explode(":",$reference)[0];
-        $reference = str_replace(":", "", $reference);
+    if (!$reference || $reference == "") {
+        // get entire book
+        $foundItem = null;
+        foreach($bible_info as $item) {
+            if (!empty($foundItem)) break;
+            if (strcmp(intval($bookNr), $item['nummer']) === 0) {
+                $foundItem = $item;
+                break;
+            }
+        }
+        for ($c = 0; $c < count($foundItem['struktur']); $c++) { 
+            array_push($chapter, $c + 1);
+        }	
+        $wholeChapter = true;
     } else {
-        $chapter = $reference;
+        // get the specified chapters
+        if (strpos($reference,":")) {
+            array_push($chapter,explode(":",$reference)[0]);
+            $reference = str_replace(":", "", $reference);
+            $wholeChapter = false;
+        } else if (strpos($reference,"-")) {
+            $arr = explode ('-',$reference);
+            for ($c = intval($arr[0]); $c < (intval($arr[1]) + 1); $c++) { 
+                array_push($chapter, $c);
+            }	
+            $reference = "";
+            $wholeChapter = true;
+        } else {
+            array_push($chapter, $reference);
+            $wholeChapter = true;
+        }
+        $reference = str_replace($chapter, "", $reference);
     }
-    $reference = str_replace($chapter, "", $reference);
     return $chapter;
 }
 
@@ -72,15 +98,12 @@ $bibleBook;
 $bibleChapter;
 $bibleVerse;
 if (!empty($reference)) {
+    $wholeChapter;
     $bibleBook = parseReference_book ($reference, $bible_info);
-    $bibleChapter = parseReference_chapter ($reference);
+    $bibleChapter = parseReference_chapter ($reference, $bibleBook, $wholeChapter, $bible_info);
     $bibleVerse = parseReference_verse ($reference);
     
-    $wholeChapter;
-    if  (empty($bibleVerse)) $wholeChapter = true;
-    else $wholeChapter = false;
-    
-    getScripture("../bibles/schlachter_1951_strong.xml", $bibleBook['nummer'], $bibleChapter, 1, $wholeChapter, $bibleVerse);
+    getScripture("../bibles/schlachter_1951_strong.xml", $bibleBook['nummer'], $bibleChapter, null, $wholeChapter, $bibleVerse);
 } else {
     
 
@@ -150,7 +173,6 @@ if (!empty($reference)) {
                     break;
                 }
             }
-            echo count($foundItem['struktur']);
             for ($c = 0; $c < count($foundItem['struktur']); $c++) { 
                 array_push($chapterNr, $c + 1);
             }	
@@ -166,12 +188,19 @@ if (!empty($reference)) {
             $arrVRange = array();
             $tmpVerses = $_GET["verses"];
             if(!empty($tmpVerses)) {
-                if (!strpos($tmpVerses,',') && !strpos($arrVEl,'-')) {
+                if (strpos($tmpVerses,',') === false && strpos($arrVEl,'-') === false) {
+                    var_dump($tmpVerses);
+                    echo "HERE: ".strpos($arrVEl,'-');
+                    // single verse
                     array_push($versesNr, intval($tmpVerses));
                 } else if (strpos($tmpVerses,',')) {
                     if ($log) echo("<script>console.log('PHP: Multiple arrays of verses selected.');</script>");
                     $arrVers = explode (',',$tmpVerses);
-                } else array_push($arrVers, $tmpVerses);
+                } else {
+                    // single range of verses
+                    array_push($arrVers, $tmpVerses);
+                    var_dump ($arrVers);
+                }
                 foreach ($arrVers as $arrVEl) {
                     if (strpos($arrVEl,'-')) {
                         if ($log) echo("<script>console.log('PHP: Multiple ranges of verses selected.');</script>");
@@ -180,6 +209,8 @@ if (!empty($reference)) {
                     if (count($arrVRange) != 2) echo("<script>console.log('PHP: Ranges must have format <value>-<value>!');</script>");
                     $vFrom = intval ($arrVRange[0]);
                     $vTo = intval ($arrVRange[1]) + 1;
+                    var_dump($vFrom);
+                    var_dump($vTo);
                     for ($v = $vFrom; $v < $vTo; $v++) { 
                         array_push($versesNr, $v);
                     }	
